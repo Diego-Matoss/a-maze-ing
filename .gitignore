@@ -17,3 +17,6 @@ dist/
 
 # Generated maze output
 maze.txt
+
+# macOS
+.DS_Store
