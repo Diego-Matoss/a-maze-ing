@@ -28,3 +28,27 @@ class Config:
     output_file: str
     perfect: bool
     seed: int | None = None
+
+
+def read_config_lines(path: str) -> list[str]:
+    """Read a configuration file and return its raw lines.
+
+    Args:
+        path: Path to the configuration file.
+
+    Returns:
+        The lines of the file, in order.
+
+    Raises:
+        ConfigError: If the file cannot be read.
+    """
+
+    lines: list[str] = []
+
+    try:
+        with open(path, encoding="utf-8") as f:
+            lines = f.readlines()
+    except (OSError, ValueError) as e:
+        raise ConfigError(f"Cannot read '{path}': {e}") from e
+
+    return lines
