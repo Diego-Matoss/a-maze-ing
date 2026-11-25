@@ -20,7 +20,6 @@ class Config:
         perfect: Whether the maze must be perfect.
         seed: Random seed, or None for a random one.
     """
-
     width: int
     height: int
     entry: tuple[int, int]
@@ -42,7 +41,6 @@ def read_config_lines(path: str) -> list[str]:
     Raises:
         ConfigError: If the file cannot be read.
     """
-
     lines: list[str] = []
 
     try:
@@ -52,3 +50,23 @@ def read_config_lines(path: str) -> list[str]:
         raise ConfigError(f"Cannot read '{path}': {e}") from e
 
     return lines
+
+
+def clean_config_lines(lines: list[str]) -> list[str]:
+    """Remove comments and blank lines from raw config lines.
+
+    Args:
+        lines: Raw lines as returned by read_config_lines.
+
+    Returns:
+        The meaningful lines, without surrounding whitespace
+        or trailing newlines.
+    """
+    clean_lines: list[str] = []
+    for line in lines:
+        line = line.strip()
+        if line.startswith("#") or not line:
+            continue
+        clean_lines.append(line)
+
+    return clean_lines
